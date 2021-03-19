@@ -1,0 +1,427 @@
+using System;
+
+namespace ATM
+{
+    class MainClass
+    {
+     
+        public static void Main()
+        {
+
+            /*
+             *The Greeting Portion. This section greets the user, and gives
+             *the user the option to deposit, withdraw, or cancel.
+             */
+
+
+
+            Console.WriteLine("Hello! What would you like to do today?" +
+                                "\n" + "For withdrawl type 'W'" + "\n" +
+                                "For deposit type 'D'" + "\n" +
+                                "For cancel type 'C'");
+
+            Console.WriteLine("");
+            string answer1 = (Console.ReadLine());
+
+            //Calling different methods depening on the answer
+
+
+
+            //withdrawl
+            if (answer1 == "W") 
+            {
+                /* this will call a method asking the use to accept
+                 *or decline the atm fee, before proceeding to the
+                 withdrawl */
+                Withdraw.atmfee();
+                Console.WriteLine("");
+                
+            }
+
+            //deposit
+            else if (answer1 == "D") 
+            {
+                Console.WriteLine("Great!\n");
+                Deposit.deposit();
+            }
+
+            //cancel
+            else if (answer1 == "C") 
+            {
+                Console.WriteLine("Okay. Have a nice day!");
+            }
+
+            //any other input, invalid result
+            else 
+            {
+                Console.WriteLine("Invalid input... \nPlease try again..\n\n");
+                Main();
+            }
+            
+        } 
+    }
+
+    class Withdraw
+    {
+        /*These variables are placed directly in the Withdrawl class in order to
+         *use them in multiple methods throughout the program */
+
+        public static int acctbal = 2000;
+        public static double [] acctbal2 = new double [2];
+        public static double acctbal3 = 2000;
+        public static int i = 0;
+        private static double fee = 0.33;
+        
+
+        public static void atmfee()
+        {
+            /*
+            * This portion prompts the user to decide whether they want to 
+            * accept the ATM fee. The user will have the option to continue
+            * with the fee or cancel.
+            */
+
+
+
+            Console.WriteLine("");
+            Console.WriteLine("There is a $0.33 ATM fee at this " +
+                                "machine. Would you like to proceed?" +
+                                "\n" + "type 'Y' for yes " +
+                                "or type 'N' for no" + "\n\n" +
+                                "Type 'M' to return to the main menu.\n");
+
+            string answer2 = (Console.ReadLine());
+
+            //accepting the fee
+            if (answer2 == "Y")
+            {
+
+                withdraw();
+            }
+
+            //canceling the transaction and exits the application
+            else if (answer2 == "N")
+            {
+                Console.WriteLine("Okay. Have a nice day!");
+
+            }
+
+            //returning to the main menu
+            else if (answer2 == "M")
+            {
+
+
+                MainClass.Main();
+            }
+
+            //any other input, invalid result.
+            else
+            {
+                Console.WriteLine("Invalid input... \nPlease try again..\n");
+                atmfee();
+            }
+
+
+
+        }
+
+        public static void withdraw()
+        {
+
+
+            /*
+             * This portion is where the user inputs how much they want to 
+             * withdraw from the account. The application will state the account
+             * balance before and after the transaction.
+             * 
+             * The ATM will only accept transaction amounts that are multiples 
+             * of 20 to simulate the ATM only carring $20 bills.
+             */
+
+
+
+            
+            acctbal2[0] = 2000;
+
+            Console.WriteLine("");
+            Console.WriteLine($"Your account balance is: $" + acctbal2[i] +
+                "\n" + "How much would you like to withdraw?" + "\n");
+
+            int withdrawl = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("");
+
+            // the withdrawl amount meeting the criteria
+            if (withdrawl < acctbal && withdrawl % 20 == 0 && withdrawl != 0)
+            {
+                
+                for (i = 0; i <= acctbal2.Length;)
+                {
+                    acctbal3 = acctbal2[i] - (withdrawl + fee);
+
+                    Console.WriteLine("Success! Your remaining balance is: $" +
+                                            (acctbal3) + "\n");
+                    break;
+                }
+                i++;
+
+                /*after stating the updated acount balance, the user has the 
+                option to make another transaction */
+                Console.WriteLine("Would you like to make another transaction?\n");
+
+                string answer = (Console.ReadLine());
+
+
+                //calling method for another transaction
+                if (answer == "Y")
+                {
+
+                    AnotherTransaction.transaction();
+
+                }
+
+                /*exits the application if the user decided not to make another
+                 transaction */
+                if (answer == "N")
+                {
+                    Console.WriteLine("Thanks for stopping by. Have a nice day!");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadLine();
+                }
+
+
+             
+            }
+
+            // the withdrawl amount not being a multiple of 20
+            else if (withdrawl < acctbal && withdrawl % 20 != 0)
+            {
+                Console.WriteLine("Sorry, we only have $20 bills. " +
+                                  "\n" + "Please try again..\n");
+
+                withdraw();
+            }
+
+
+
+            //the withdrawl amount being greater than the account balance
+            else if (withdrawl > acctbal)
+            {
+                Console.WriteLine("Not enough money. Please try again..\n");
+
+                withdraw();
+            }
+
+
+            //any other input, an invalid result
+            else
+            {
+                Console.WriteLine("Invalid input... \nPlease try again..\n");
+
+                withdraw();
+            }
+        }
+
+        public static void withdraw2()
+        {
+            Console.WriteLine("");
+            Console.WriteLine($"Your account balance is: $" + acctbal3 +
+                "\n" + "How much would you like to withdraw?" + "\n");
+
+            int withdrawl = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("");
+
+            // the withdrawl amount meeting the criteria
+            if (withdrawl < acctbal3 && withdrawl % 20 == 0 && withdrawl != 0)
+            {
+
+                for (i = 0; i <= acctbal2.Length;)
+                {
+                    acctbal3 = acctbal3 - (withdrawl + fee);
+
+                    Console.WriteLine("Success! Your remaining balance is: $" +
+                                            (acctbal3) + "\n");
+                    break;
+                }
+                i++;
+
+                /*after stating the updated acount balance, the user has the 
+                 option to make another transaction */
+                Console.WriteLine("Would you like to make another transaction?\n" +
+                                    "Type 'Y' for yes\nType 'N' for no");
+
+
+                string answer = (Console.ReadLine());
+
+                //calling method for another transaction
+                if (answer == "Y")
+                {
+                    AnotherTransaction.transaction();
+
+                }
+
+                /*exits the application if the user decided not to make another
+                 transaction */
+                if (answer == "N")
+                {
+                    Console.WriteLine("Thanks for stopping by. Have a nice day!");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input... \nPlease try again..\n\n" +
+                        answer);
+
+                    
+                }
+
+
+
+
+            }
+
+            // the withdrawl amount not being a multiple of 20
+            else if (withdrawl < acctbal3 && withdrawl % 20 != 0)
+            {
+                Console.WriteLine("Sorry, we only have $20 bills. " +
+                                  "\n" + "Please try again..\n\n");
+
+                withdraw2();
+            }
+
+
+
+            //the withdrawl amount being greater than the account balance
+            else if (withdrawl > acctbal3)
+            {
+                Console.WriteLine("Not enough money. Please try again..\n\n");
+
+                withdraw2();
+            }
+
+
+            //any other input, an invalid result
+            else
+            {
+                Console.WriteLine("Invalid input... \nPlease try again..\n\n");
+
+                withdraw2();
+            }
+        }
+    }
+
+    public class Deposit
+    {
+        public static void deposit()
+        {
+            /*
+             * This portion is where the user inputs how much they want to 
+             * deposit into the account. The application will state the account
+             * balance after the deposit.
+             * 
+             * The ATM will only accept deposit amounts that are multiples 
+             * of 20 to simulate the ATM only carring $20 bills.
+             * 
+             */
+
+
+            Console.WriteLine("How much would you like to deposit?" +
+                "\n");
+
+            int ddeposit = Convert.ToInt32(Console.ReadLine());
+
+
+            // a deposit amount meeting all the criteria
+            if (ddeposit % 20 == 0 && ddeposit != 0)
+            {
+                Console.WriteLine("Success! Your updated balance is: $" +
+                                (Withdraw.acctbal3 + ddeposit)+ "\n");
+
+                Withdraw.acctbal3 = (ddeposit + Withdraw.acctbal3);
+
+                /*after stating the updated acount balance, the user has the 
+                 option to make another transaction */
+                Console.WriteLine("Would you like to make another transaction?\n" +
+                                    "Type 'Y' for yes\nType 'N' for no");
+
+                string answer = (Console.ReadLine());
+
+
+                //calling method for another transaction
+                if (answer == "Y")
+                {
+                    AnotherTransaction.transaction();
+                }
+
+                /*exits the application if the user decided not to make another
+                 transaction */
+                if (answer == "N")
+                {
+                    Console.WriteLine("Thanks for stopping by. Have a nice day!");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadLine();
+                }
+            }
+
+            // a deposit amount that is not a multiple of 20
+            else if (ddeposit % 20 != 0 && ddeposit != 0)
+            {
+                Console.WriteLine("Sorry, we only accept $20 bills. " +
+                                          "\n" + "Please try again..\n");
+
+                deposit();
+            }
+
+            //any other input, an invalid result
+            else
+            {
+                Console.WriteLine("Invalid input... \nTry again..\n");
+                deposit();
+            }
+        }
+
+
+    }
+
+    public class AnotherTransaction
+    {
+        public static void transaction()
+        {
+
+            /*
+             * This portion is where the user decides if they want to make an 
+             * additional deposit or transaction, or to exit the application
+             * 
+             */
+
+            Console.WriteLine("\nType 'D' for deposit\nType 'W' for withdrawl\n\n" +
+                              "Type 'X' to exit the application\n" );
+            string answer2 = (Console.ReadLine());
+
+            if (answer2 == "D")
+            {
+                Deposit.deposit();
+                Console.WriteLine("");
+            }
+
+            else if (answer2 == "W")
+            {
+                Withdraw.withdraw2();
+                Console.WriteLine("");
+            }
+            else if (answer2 == "X")
+            {
+                Console.WriteLine("Thanks for stopping by. Have a nice day!");
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Invalid input... \nTry again..\n");
+                transaction();
+            }
+        }
+    }
+}
