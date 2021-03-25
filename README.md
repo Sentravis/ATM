@@ -1,4 +1,4 @@
-# ATM
+# ATM Simulator
 
 C# Application 
 
