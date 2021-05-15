@@ -8,7 +8,6 @@ This is a C# console application that simulates the generic funtions of an ATM w
 
 Continuous updates being made.
  
-Initally created on Feb 26 2021 --
-Last updated Mar 12 2021
+
 
 
